@@ -1,0 +1,36 @@
+header {
+  background: cornflowerblue;
+  color: white;
+  position: fixed;
+  width: 100%;
+  z-index: 10000;
+}
+h1 {
+  text-align: center;
+}
+div#search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: .5rem;
+}
+div#search > img {
+  margin: auto 5px;
+}
+input#query {
+  background: transparent;
+  border: none;
+  border-bottom: 2px rgb(182, 174, 255) solid;
+  color: aliceblue;
+  font-size: 2em;
+  width: 50%;
+}
+input#query:focus {
+  outline: none;
+  border-bottom: 2px #eee solid;
+}
+@media (min-width: 425px) {
+  div#search {
+    margin: 0;
+  }
+}
