@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import Header from "./components/Header";
+import UserCard from './components/UserCard';
 
-function App() {
+export const QueryContext = React.createContext();
+
+export default function App() {
+  const [query, setQuery] = useState("git");
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    query != ""
+      ? axios
+          .get(`https://api.github.com/search/users?q=${query}`)
+          .then((res) => setUsers(res.data.items))
+          .catch((err) => setUsers([]))
+      : setUsers([]);
+  }, [query]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <QueryContext.Provider value={{query, setQuery}}>
+        <Header />
+        <div className="wrapper">
+          {users.map((user) => (
+            <UserCard user={user} />
+          ))}
+        </div>
+      </QueryContext.Provider>
     </div>
   );
 }
-
-export default App;
